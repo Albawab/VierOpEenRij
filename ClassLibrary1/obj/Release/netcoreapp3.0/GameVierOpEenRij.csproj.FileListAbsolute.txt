@@ -1,0 +1,7 @@
+C:\Users\Abdul\Desktop\Werk\VierOpEenRij\ClassLibrary1\bin\Release\netcoreapp3.0\HenE.GameVOER.deps.json
+C:\Users\Abdul\Desktop\Werk\VierOpEenRij\ClassLibrary1\bin\Release\netcoreapp3.0\HenE.GameVOER.dll
+C:\Users\Abdul\Desktop\Werk\VierOpEenRij\ClassLibrary1\bin\Release\netcoreapp3.0\HenE.GameVOER.pdb
+C:\Users\Abdul\Desktop\Werk\VierOpEenRij\ClassLibrary1\obj\Release\netcoreapp3.0\GameVierOpEenRij.AssemblyInfoInputs.cache
+C:\Users\Abdul\Desktop\Werk\VierOpEenRij\ClassLibrary1\obj\Release\netcoreapp3.0\GameVierOpEenRij.AssemblyInfo.cs
+C:\Users\Abdul\Desktop\Werk\VierOpEenRij\ClassLibrary1\obj\Release\netcoreapp3.0\HenE.GameVOER.dll
+C:\Users\Abdul\Desktop\Werk\VierOpEenRij\ClassLibrary1\obj\Release\netcoreapp3.0\HenE.GameVOER.pdb

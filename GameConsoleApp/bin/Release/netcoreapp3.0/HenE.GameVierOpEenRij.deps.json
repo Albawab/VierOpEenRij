@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.0": {
+      "HenE.GameVierOpEenRij/1.0.0": {
+        "dependencies": {
+          "HenE.GameVOER": "1.0.0"
+        },
+        "runtime": {
+          "HenE.GameVierOpEenRij.dll": {}
+        }
+      },
+      "HenE.GameVOER/1.0.0": {
+        "runtime": {
+          "HenE.GameVOER.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "HenE.GameVierOpEenRij/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "HenE.GameVOER/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

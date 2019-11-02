@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace VierOPEenRij
+namespace ConsoleProgram
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            
         }
     }
 }

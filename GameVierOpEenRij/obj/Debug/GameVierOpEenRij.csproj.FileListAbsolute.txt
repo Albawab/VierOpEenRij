@@ -1,0 +1,5 @@
+C:\Users\Abdul\Desktop\Werk\VierOpEenRij\GameVierOpEenRij\obj\Debug\GameVierOpEenRij.csprojAssemblyReference.cache
+C:\Users\Abdul\Desktop\Werk\VierOpEenRij\GameVierOpEenRij\bin\Debug\HenE.GameVierOpEenRij.dll
+C:\Users\Abdul\Desktop\Werk\VierOpEenRij\GameVierOpEenRij\bin\Debug\HenE.GameVierOpEenRij.pdb
+C:\Users\Abdul\Desktop\Werk\VierOpEenRij\GameVierOpEenRij\obj\Debug\HenE.GameVierOpEenRij.dll
+C:\Users\Abdul\Desktop\Werk\VierOpEenRij\GameVierOpEenRij\obj\Debug\HenE.GameVierOpEenRij.pdb
