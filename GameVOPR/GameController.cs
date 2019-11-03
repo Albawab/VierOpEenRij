@@ -46,20 +46,20 @@ namespace HenE.VierOPEenRij
             string bord = this.speelVlak.TekenSpeelvlak();
             Console.WriteLine(bord);
             Speler speler = this.gameVierOpEenRij.HuidigeSpeler;
-                while (!this.gameVierOpEenRij.HeeftGewonnen(speelVlak, speler.GebruikTeken))
+            while (!this.gameVierOpEenRij.HeeftGewonnen(this.speelVlak, speler.GebruikTeken))
                 {
                     int inzet;
                     do
                     {
-                        inzet = speler.DoeZet("");
+                        inzet = speler.DoeZet(string.Empty);
+                    }
+                    while (!this.speelVlak.MagInzetten(inzet));
 
-                    } while (!speelVlak.MagInzetten(inzet));
-
-                    this.gameVierOpEenRij.TekentOpSpeelvlak(inzet, speelVlak, speler.GebruikTeken);
-                speler = this.gameVierOpEenRij.TegenSpeler(speler);
+                    this.gameVierOpEenRij.TekentOpSpeelvlak(inzet, this.speelVlak, speler.GebruikTeken);
+                    speler = this.gameVierOpEenRij.TegenSpeler(speler);
                 }
-            // heeft gewonnen?
 
+            // heeft gewonnen?
 
             /*
             this.speelVlak.TekenSpeelvlak(this.dimension);
@@ -69,7 +69,6 @@ namespace HenE.VierOPEenRij
                 speler.Doezet();
             } while (true);
             speler.*/
-
         }
     }
 }

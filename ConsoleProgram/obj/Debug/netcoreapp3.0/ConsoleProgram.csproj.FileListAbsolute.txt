@@ -1,3 +1,0 @@
-C:\Users\Abdul\Desktop\Werk\VierOpEenRij\ConsoleProgram\obj\Debug\netcoreapp3.0\ConsoleProgram.csprojAssemblyReference.cache
-C:\Users\Abdul\Desktop\Werk\VierOpEenRij\ConsoleProgram\obj\Debug\netcoreapp3.0\ConsoleProgram.AssemblyInfoInputs.cache
-C:\Users\Abdul\Desktop\Werk\VierOpEenRij\ConsoleProgram\obj\Debug\netcoreapp3.0\ConsoleProgram.AssemblyInfo.cs

@@ -27,7 +27,7 @@ namespace HenE.VierOPEenRij
         /// <summary>
         /// Gets or sets Teken van de speler.
         /// </summary>
-        public Teken GebruikTeken { get; private set; }
+        public Teken GebruikTeken { get; protected set; }
 
         /// <summary>
         /// Gets or sets het situatie van een speler.
@@ -53,6 +53,15 @@ namespace HenE.VierOPEenRij
         /// </summary>
         /// <param name="vraag">De inzet.</param>
         /// <returns>Het nummer die de speler wil inzetten.</returns>
-        public abstract int DoeZet(string Vraag);
+        public abstract int DoeZet(string vraag);
+
+        /// <summary>
+        /// Zet een teken die de speler het gaat gebruiken.
+        /// </summary>
+        /// <param name="teken">De teken.</param>
+        public virtual void ZetTeken(Teken teken)
+        {
+            this.GebruikTeken = teken;
+        }
     }
 }

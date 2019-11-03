@@ -1,4 +1,4 @@
-﻿// <copyright file="GameVierOpEenRij.cs" company="PlaceholderCompany">
+﻿// <copyright file="Game.cs" company="PlaceholderCompany">
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
@@ -8,6 +8,7 @@ namespace HenE.VierOPEenRij
     using System.Collections.Generic;
     using HenE.GameVOPR;
     using HenE.VierOPEenRij.Enum;
+    using HenE.VierOPEenRij.Interface;
 
     /// <summary>
     /// Gaat over het spel.
@@ -15,9 +16,10 @@ namespace HenE.VierOPEenRij
     public class Game
     {
         private readonly List<Speler> spelers = new List<Speler>();
+        private EnumHepler enumHepler = new EnumHepler();
 
         /// <summary>
-        /// Gets or sets hudige speler.
+        /// Gets hudige speler.
         /// </summary>
         public Speler HuidigeSpeler { get; private set; }
 
@@ -86,7 +88,8 @@ namespace HenE.VierOPEenRij
         /// </summary>
         /// <param name="naam">De naam van een nieuwe speler.</param>
         /// <param name="status">De situatie van een speler.</param>
-        public void HandlSpeler(string naam, Status status)
+        /// <param name="teken">Het teken die de speler zal gepruiken.</param>
+        public void HandlSpeler(string naam, Status status, string teken)
         {
             Speler speler;
             if (naam == "Computer")
@@ -97,9 +100,12 @@ namespace HenE.VierOPEenRij
             {
                 // Voeg een speler aan het spel toe.
                 speler = this.AddHumanSpeler(naam);
+                Teken tekenVanSpeler = this.enumHepler.EnumConvert<Teken>(teken);
+                this.ZetTeken(speler, tekenVanSpeler);
             }
 
-            HuidigeSpeler = speler;
+            this.HuidigeSpeler = speler;
+
             // Chang the status of the speler.
             speler.ChangeStatus(status);
         }
@@ -108,28 +114,21 @@ namespace HenE.VierOPEenRij
         /// Chack of de speler mag spelen.
         /// </summary>
         /// <returns>Mag spelen of niet.</returns>
-        public bool KanStarten()
-        {
-            if (this.spelers.Count == 2)
-            {
-                return true;
-            }
-
-            return false;
-        }
+        public bool KanStarten() => this.spelers.Count == 2;
 
         /// <summary>
         /// Geeft de spelers van het speler terug geven.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Lijst van spelers.</returns>
         public List<Speler> GeefSpeler()
         {
-            List<Speler> _spelers = new List<Speler>();
+            List<Speler> spelers = new List<Speler>();
             foreach (Speler speler in this.spelers)
             {
-                _spelers.Add(speler);
+                spelers.Add(speler);
             }
-            return _spelers;
+
+            return spelers;
         }
 
         /// <summary>
@@ -138,13 +137,13 @@ namespace HenE.VierOPEenRij
         /// <param name="inzet">De keuze van de speler.</param>
         /// <param name="speelVlak">Het speelvalk.</param>
         /// <param name="teken">Het teken van de speler.</param>
-
         public void TekentOpSpeelvlak(int inzet, SpeelVlak speelVlak, Teken teken)
         {
             if (teken == Teken.Undefined)
             {
                // throw new ArgumentOutOfRangeException("Mag niet de teken Umdefined zijn of null.");
             }
+
             if (speelVlak == null)
             {
                 throw new ArgumentNullException("mag niet het speelvlak null zijn.");
@@ -154,19 +153,34 @@ namespace HenE.VierOPEenRij
             {
                 throw new ArgumentOutOfRangeException("Mag niet het inzet nul of minder zijn.");
             }
+
             speelVlak.TekenInzetten(inzet, teken);
         }
 
         /// <summary>
         /// Check of de speler heeft gewonnen of niet.
         /// </summary>
-        /// <param name="speelVlak">Het speelvlak</param>
+        /// <param name="speelVlak">Het speelvlak.</param>
         /// <param name="teken">De teken van de speler die zal nagaan.</param>
         /// <returns>Heeft vier op een rij of niet.</returns>
         public bool HeeftGewonnen(SpeelVlak speelVlak, Teken teken)
         {
-            /*return speelVlak.HeeftGewonnen(teken);*/
-            return false;
+           return speelVlak.HeeftGewonnen(teken) ? true : false;
+        }
+
+        /// <summary>
+        /// Geeft de speler eigen teken die hij het nodig heeft om te spelen.
+        /// </summary>
+        /// <param name="speler">De speler die een teken wordt gekregen.</param>
+        /// <param name="tekenVanSpeler">De teken.</param>
+        private void ZetTeken(Speler speler, Teken tekenVanSpeler)
+        {
+            if (speler == null)
+            {
+                throw new ArgumentNullException("Mag speler niet null zijn");
+            }
+
+            speler.ZetTeken(tekenVanSpeler);
         }
     }
 }

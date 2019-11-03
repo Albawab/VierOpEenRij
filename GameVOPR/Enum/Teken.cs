@@ -4,7 +4,6 @@
 
 namespace HenE.VierOPEenRij.Enum
 {
-
     /// <summary>
     /// Have de tekeningen van det spel die de speler heeft nogdig om te inzetten.
     /// </summary>

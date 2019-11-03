@@ -26,7 +26,6 @@ namespace HenE.VierOPEenRij.Interface
         /// <param name="stream">De stream die van een persoon komt.</param>
         protected abstract void SplitsDeStream(string stream);
 
-
         /// <summary>
         /// Chack of mag spelen.
         /// Als ja dan staart het spel.

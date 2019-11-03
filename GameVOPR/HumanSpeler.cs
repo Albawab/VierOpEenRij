@@ -5,6 +5,7 @@
 namespace HenE.VierOPEenRij
 {
     using System;
+    using HenE.VierOPEenRij.Enum;
     using HenE.VierOPEenRij.Interface;
 
     /// <summary>
@@ -21,12 +22,8 @@ namespace HenE.VierOPEenRij
         {
         }
 
-        /// <summary>
-        /// Gets or sets de naam van de speler.
-        /// </summary>
-        private string Naam { get; set; }
-
-        public override int DoeZet(string Vraag)
+        /// <inheritdoc/>
+        public override int DoeZet(string vraag)
         {
             Console.WriteLine("Kies een nummer");
             string antwoord = Console.ReadLine();
@@ -35,11 +32,13 @@ namespace HenE.VierOPEenRij
             return inzet;
         }
 
+        /// <inheritdoc/>
         public string VraagNaam(string vraag)
         {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
         public string WilStopen(string vraag)
         {
             throw new NotImplementedException();
@@ -49,9 +48,8 @@ namespace HenE.VierOPEenRij
         /// Zet een teken die de speler het gaat gebruiken.
         /// </summary>
         /// <param name="teken">De teken.</param>
-        public void ZetTeken(Teken teken)
+        public new void ZetTeken(Teken teken)
         {
-            GebruikTeken = teken;
         }*/
     }
 }
