@@ -47,17 +47,19 @@ namespace HenE.VierOPEenRij
             Console.WriteLine(bord);
             Speler speler = this.gameVierOpEenRij.HuidigeSpeler;
             while (!this.gameVierOpEenRij.HeeftGewonnen(this.speelVlak, speler.GebruikTeken))
+            {
+                int inzet;
+                do
                 {
-                    int inzet;
-                    do
-                    {
-                        inzet = speler.DoeZet(string.Empty);
-                    }
-                    while (!this.speelVlak.MagInzetten(inzet));
-
-                    this.gameVierOpEenRij.TekentOpSpeelvlak(inzet, this.speelVlak, speler.GebruikTeken);
-                    speler = this.gameVierOpEenRij.TegenSpeler(speler);
+                    inzet = speler.DoeZet(string.Empty, this.speelVlak, this.gameVierOpEenRij);
                 }
+                while (!this.speelVlak.MagInzetten(inzet));
+
+                this.gameVierOpEenRij.TekentOpSpeelvlak(inzet, this.speelVlak, speler.GebruikTeken);
+                bord = this.speelVlak.TekenSpeelvlak();
+                Console.WriteLine(bord);
+                speler = this.gameVierOpEenRij.TegenSpeler(speler);
+            }
 
             // heeft gewonnen?
 

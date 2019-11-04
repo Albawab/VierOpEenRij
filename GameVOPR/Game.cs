@@ -100,10 +100,10 @@ namespace HenE.VierOPEenRij
             {
                 // Voeg een speler aan het spel toe.
                 speler = this.AddHumanSpeler(naam);
-                Teken tekenVanSpeler = this.enumHepler.EnumConvert<Teken>(teken);
-                this.ZetTeken(speler, tekenVanSpeler);
             }
 
+            Teken tekenVanSpeler = this.enumHepler.EnumConvert<Teken>(teken);
+            this.ZetTeken(speler, tekenVanSpeler);
             this.HuidigeSpeler = speler;
 
             // Chang the status of the speler.
@@ -141,7 +141,7 @@ namespace HenE.VierOPEenRij
         {
             if (teken == Teken.Undefined)
             {
-               // throw new ArgumentOutOfRangeException("Mag niet de teken Umdefined zijn of null.");
+                // throw new ArgumentOutOfRangeException("Mag niet de teken Umdefined zijn of null.");
             }
 
             if (speelVlak == null)
@@ -149,12 +149,12 @@ namespace HenE.VierOPEenRij
                 throw new ArgumentNullException("mag niet het speelvlak null zijn.");
             }
 
-            if (inzet <= 0)
+            if (inzet < 0)
             {
                 throw new ArgumentOutOfRangeException("Mag niet het inzet nul of minder zijn.");
             }
 
-            speelVlak.TekenInzetten(inzet, teken);
+            speelVlak.ZetTekenOpSpeelvlak(inzet, teken);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace HenE.VierOPEenRij
         /// <returns>Heeft vier op een rij of niet.</returns>
         public bool HeeftGewonnen(SpeelVlak speelVlak, Teken teken)
         {
-           return speelVlak.HeeftGewonnen(teken) ? true : false;
+            return speelVlak.HeeftGewonnen(teken) ? true : false;
         }
 
         /// <summary>

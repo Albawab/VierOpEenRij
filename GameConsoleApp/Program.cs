@@ -20,7 +20,7 @@ namespace HenE.GameVierOpEenRij
         {
             ICanHandelen handler = new Handler();
             handler.StreamOntvanger("Abdul%Wachten&O");
-            handler.StreamOntvanger("Computer%Gestart");
+            handler.StreamOntvanger("Computer%Gestart&X");
             Console.ReadLine();
         }
     }

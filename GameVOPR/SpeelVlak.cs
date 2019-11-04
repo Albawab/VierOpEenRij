@@ -4,6 +4,7 @@
 
 namespace HenE.VierOPEenRij
 {
+    using System.Collections.Generic;
     using System.Text;
     using HenE.VierOPEenRij.Enum;
 
@@ -27,9 +28,9 @@ namespace HenE.VierOPEenRij
         }
 
         /// <summary>
-        /// Gets or sets dimension of the speelvlak.
+        /// Gets dimension of the speelvlak.
         /// </summary>
-        private int Dimension { get; set; }
+        public int Dimension { get; private set; }
 
         /// <summary>
         /// Teken het speelvlak.
@@ -49,14 +50,14 @@ namespace HenE.VierOPEenRij
             teken.AppendLine();
             teken.AppendLine();
 
-            for (int column = 0; column < this.Dimension; column++)
+            for (int columnNummer = 0; columnNummer < this.Dimension; columnNummer++)
             {
                 string line = string.Empty;
-                for (int rij = 0; rij < this.Dimension; rij++)
+                for (int doorKolom = 0; doorKolom < this.Dimension; doorKolom++)
                 {
-                    if (this.veldenInHetSpeelvlak[column, rij] == Teken.Undefined)
+                    if (this.veldenInHetSpeelvlak[doorKolom, columnNummer] == Teken.Undefined)
                     {
-                        if (rij == 0)
+                        if (doorKolom == 0)
                         {
                             teken.Append("      ");
                         }
@@ -67,22 +68,22 @@ namespace HenE.VierOPEenRij
                     }
                     else
                     {
-                        teken.Append($"   {this.veldenInHetSpeelvlak[column, rij].ToString()}   ");
+                        if (doorKolom == 0)
+                        {
+                            teken.Append("   ");
+                        }
+
+                        teken.Append($" {this.veldenInHetSpeelvlak[doorKolom, columnNummer].ToString()} ");
                     }
 
-                    if (column != this.Dimension - 1)
+                    if (columnNummer < this.Dimension)
                     {
                         teken.Append("  |   ");
-                        if (rij != this.Dimension - 1)
+                        if (doorKolom < this.Dimension)
                         {
                             line += "--------+";
                         }
                     }
-                }
-
-                if (column != this.Dimension - 1)
-                {
-                    line += "---------";
                 }
 
                 teken.AppendLine();
@@ -121,16 +122,18 @@ namespace HenE.VierOPEenRij
         /// <summary>
         /// Check of de column nog een vrij veld heeft of niet.
         /// </summary>
-        /// <param name="column">De nummer van de column waar de method door loopt.</param>
+        /// <param name="columnNummer">De nummer van de column waar de method door loopt.</param>
         /// <returns>Heeft deze column een vrij veld of niet.</returns>
-        public bool MagInzetten(int column)
+        public bool MagInzetten(int columnNummer)
         {
-            for (int index = 0; index < this.Dimension; column++)
+            for (int kol = 0; kol < this.Dimension; kol++)
             {
-                if (this.veldenInHetSpeelvlak[index, column] == Teken.Undefined)
+                if (this.veldenInHetSpeelvlak[columnNummer, kol] == Teken.Undefined)
                 {
                     return true;
                 }
+
+                return false;
             }
 
             return false;
@@ -160,22 +163,36 @@ namespace HenE.VierOPEenRij
         /// <summary>
         /// Zet de teken op het speelvlak.
         /// </summary>
-        /// <param name="inzet">Waar de speler wil inzetten.</param>
+        /// <param name="inzet">Waar de speler wil zetten.</param>
         /// <param name="teken">De teken van de speler.</param>
-        public void TekenInzetten(int inzet, Teken teken)
+        /// <returns>Het nummer in de kolom die wordt gebruiken om teken te zetten.</returns>
+        public int ZetTekenOpSpeelvlak(int inzet, Teken teken)
         {
             int inzetNummer = 0;
             for (int kolom = 0; kolom < this.Dimension; kolom++)
             {
-                if (this.veldenInHetSpeelvlak[kolom, inzet] == Teken.Undefined)
+                // als de veld vrij is.
+                if (this.veldenInHetSpeelvlak[inzet, kolom] == Teken.Undefined)
                 {
                     inzetNummer = kolom;
+                    if (kolom == this.Dimension - 1)
+                    {
+                        // zet teken als de veld vrij is.
+                        this.veldenInHetSpeelvlak[inzet, kolom] = teken;
+                        return inzetNummer;
+                    }
                 }
                 else
                 {
-                    this.veldenInHetSpeelvlak[inzetNummer, kolom] = teken;
+                    if (this.veldenInHetSpeelvlak[inzet, inzetNummer] == Teken.Undefined)
+                    {
+                        this.veldenInHetSpeelvlak[inzet, inzetNummer] = teken;
+                        return inzetNummer;
+                    }
                 }
             }
+
+            return inzetNummer;
         }
 
         /// <summary>
@@ -185,95 +202,170 @@ namespace HenE.VierOPEenRij
         /// <returns>Heeft de speler gewonnen of niet.</returns>
         public bool HeeftGewonnen(Teken teken)
         {
-                bool heeftIemandGewonnen = false;
+            bool heeftIemandGewonnen = false;
 
-                // wanneer heeft een teken gewonnen?
-                // horizontaal een hele rij
-                // roep voor elke row op het bord de functie AreAllFieldsInTheRowEqual aan
-                for (int rij = 0; rij < this.Dimension && !heeftIemandGewonnen; rij++)
+            // wanneer heeft een teken gewonnen?
+            // horizontaal een hele rij
+            // roep voor elke row op het bord de functie AreAllFieldsInTheRowEqual aan
+            for (int rij = 0; rij < this.Dimension && !heeftIemandGewonnen; rij++)
+            {
+                heeftIemandGewonnen = this.ZijnErVierTekenGelijkInEenKolom(rij, teken);
+                if (heeftIemandGewonnen)
                 {
-                    heeftIemandGewonnen = this.AreAllFieldsInTheRowEqualTo(rij, teken);
-                    if (heeftIemandGewonnen)
-                    {
-                        return true;
-                    }
+                    return true;
                 }
+            }
 
-                // verticaal een hele rij
-                for (int col = 0; col < this.Dimension && !heeftIemandGewonnen; col++)
-                {
-                    heeftIemandGewonnen = this.AreAllFieldsInTheColEqualTo(col, teken);
-
-                    if (heeftIemandGewonnen)
-                    {
-                        return true;
-                    }
-                }
-
-                heeftIemandGewonnen = true;
-
-                for (short colrow = 0; colrow < this.Dimension; colrow++)
-                {
-                    if (this.veldenInHetSpeelvlak[colrow, colrow] != teken)
-                    {
-                        heeftIemandGewonnen = false;
-                        break;
-                    }
-                }
+            // verticaal een hele rij
+            for (int col = 0; col < this.Dimension && !heeftIemandGewonnen; col++)
+            {
+                heeftIemandGewonnen = this.ZijnErVierTekenGelijkInEenRij(col, teken);
 
                 if (heeftIemandGewonnen)
                 {
-                    return heeftIemandGewonnen;
+                    return true;
                 }
+            }
 
-                // van rechtsboven naar linksonder
-                int maxDim = this.Dimension;
-                maxDim--;
+            heeftIemandGewonnen = true;
 
-                heeftIemandGewonnen = true;
-
-                for (int row = 0; row < this.Dimension; row++)
+            for (int colrow = 0; colrow < this.Dimension; colrow++)
+            {
+                if (this.veldenInHetSpeelvlak[colrow, colrow] != teken)
                 {
-                    if (this.veldenInHetSpeelvlak[maxDim--, row] != teken)
+                    heeftIemandGewonnen = false;
+                    break;
+                }
+            }
+
+            if (heeftIemandGewonnen)
+            {
+                return heeftIemandGewonnen;
+            }
+
+            // richtboven naar linksonder.
+            // kolom naar rij
+            int kolomNummer;
+
+
+            // Vanaf rij 3 starten.
+            for (int kolom = 3; kolom < this.Dimension; kolom++)
+            {
+                kolomNummer = kolom;
+                int rijNummer = 0;
+                for (int rij = 0; rij < kolom; rij++)
+                {
+
+                    if (this.veldenInHetSpeelvlak[kolomNummer--, rijNummer++] == teken)
                     {
-                        heeftIemandGewonnen = false;
-                        break;
+
                     }
                 }
+            }
 
-                return heeftIemandGewonnen;
+            for (int kolom = this.Dimension-1; kolom > this.Dimension - 3; kolom--)
+            {
+                kolomNummer = this.Dimension - 1;
+                int rijNummer = 0;
+                for (int rij = this.Dimension -1; rij > this.Dimension - 3; rij--)
+                {
+
+                    if (this.veldenInHetSpeelvlak[kolomNummer--, rijNummer++] == teken)
+                    {
+
+                    }
+                }
+            }
+
+            int maxDim = this.Dimension;
+            maxDim--;
+
+            heeftIemandGewonnen = true;
+
+            for (int row = 0; row < this.Dimension; row++)
+            {
+                if (this.veldenInHetSpeelvlak[maxDim--, row] != teken)
+                {
+                    heeftIemandGewonnen = false;
+                    break;
+                }
+            }
+
+            return heeftIemandGewonnen;
         }
 
         /// <summary>
-        /// controleer of de row heeft het zelfde teken.
+        /// functie om de lijst van velden terug geven.
         /// </summary>
-        /// <param name="rij">rij.</param>
-        /// <param name="teken">teken.</param>
-        /// <returns>False of true.</returns>
-        private bool AreAllFieldsInTheRowEqualTo(int rij, Teken teken)
+        /// <returns>Geeft de lijst van de velden terug.</returns>
+        public Teken[,] VeldenOpSpelvlak()
         {
-            for (int col = 0; col < this.Dimension; col++)
-            {
-                if (this.veldenInHetSpeelvlak[col, rij] != teken)
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return this.veldenInHetSpeelvlak;
         }
 
-        private bool AreAllFieldsInTheColEqualTo(int col, Teken teken)
+        /// <summary>
+        /// controleer of de rij heeft het zelfde teken.
+        /// </summary>
+        /// <param name="rij">Het loopt door dezen nummer.</param>
+        /// <param name="teken">teken.</param>
+        /// <returns>Heeft de functie vier vilden zijn gelijk of niet.</returns>
+        private bool ZijnErVierTekenGelijkInEenRij(int rij, Teken teken)
         {
-            for (int rij = 0; rij < this.Dimension; rij++)
+            int aantalTekenInEenrij = 0;
+            for (int kolomNummer = 0; kolomNummer < this.Dimension; kolomNummer++)
             {
-                if (this.veldenInHetSpeelvlak[col, rij] != teken)
+                if (aantalTekenInEenrij <= 4)
                 {
-                    return false;
+                    if (this.veldenInHetSpeelvlak[kolomNummer, rij] == teken)
+                    {
+                        aantalTekenInEenrij++;
+                    }
+                    else
+                    {
+                        aantalTekenInEenrij = 0;
+                    }
                 }
             }
 
-            return true;
+            if (aantalTekenInEenrij >= 4)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Controleert of de er zijn vier teken in de kolom zijn gelijk.
+        /// </summary>
+        /// <param name="kolomNummer">Het nummer van de kolom.</param>
+        /// <param name="teken">De teken die wordt gecontroleerd.</param>
+        /// <returns>Heeft de functie vier vilden zijn gelijk of niet.</returns>
+        private bool ZijnErVierTekenGelijkInEenKolom(int kolomNummer, Teken teken)
+        {
+            // Eigenlijk is doorKolom is de rij.
+            int aantalTekenInEenrij = 0;
+            for (int doorKolom = 0; doorKolom < this.Dimension; doorKolom++)
+            {
+                if (aantalTekenInEenrij <= 4)
+                {
+                    if (this.veldenInHetSpeelvlak[kolomNummer, doorKolom] == teken)
+                    {
+                        aantalTekenInEenrij++;
+                    }
+                    else
+                    {
+                        aantalTekenInEenrij = 0;
+                    }
+                }
+            }
+
+            if (aantalTekenInEenrij >= 4)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

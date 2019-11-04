@@ -52,14 +52,16 @@ namespace HenE.VierOPEenRij
         /// Vraag de speler om een zet te doen.
         /// </summary>
         /// <param name="vraag">De inzet.</param>
+        /// <param name="speelVlak">Speelvlak van het spel.</param>
+        /// <param name="game">Game.</param>
         /// <returns>Het nummer die de speler wil inzetten.</returns>
-        public abstract int DoeZet(string vraag);
+        public abstract int DoeZet(string vraag, SpeelVlak speelVlak, Game game);
 
         /// <summary>
         /// Zet een teken die de speler het gaat gebruiken.
         /// </summary>
         /// <param name="teken">De teken.</param>
-        public virtual void ZetTeken(Teken teken)
+        public void ZetTeken(Teken teken)
         {
             this.GebruikTeken = teken;
         }

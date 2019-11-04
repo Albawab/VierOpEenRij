@@ -23,13 +23,20 @@ namespace HenE.VierOPEenRij
         }
 
         /// <inheritdoc/>
-        public override int DoeZet(string vraag)
+        public override int DoeZet(string vraag, SpeelVlak speelVlak, Game game)
         {
             Console.WriteLine("Kies een nummer");
             string antwoord = Console.ReadLine();
-            int inzet = 0;
-            int.TryParse(antwoord, out inzet);
-            return inzet;
+
+            // het nummer die de speler heeft gekozen.
+            int keuzeNummer = 0;
+            int.TryParse(antwoord, out keuzeNummer);
+
+            // we doen een nummer af want de array start van nummer nul.
+            // De speler gaat een nummer tussen een en de dimension kiesen.
+            int zet = keuzeNummer - 1;
+
+            return zet;
         }
 
         /// <inheritdoc/>
@@ -43,13 +50,5 @@ namespace HenE.VierOPEenRij
         {
             throw new NotImplementedException();
         }
-
-/*        /// <summary>
-        /// Zet een teken die de speler het gaat gebruiken.
-        /// </summary>
-        /// <param name="teken">De teken.</param>
-        public new void ZetTeken(Teken teken)
-        {
-        }*/
     }
 }
