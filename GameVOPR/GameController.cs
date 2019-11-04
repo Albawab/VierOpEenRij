@@ -71,6 +71,7 @@ namespace HenE.VierOPEenRij
                 speler.Doezet();
             } while (true);
             speler.*/
+
         }
     }
 }

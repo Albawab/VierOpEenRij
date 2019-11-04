@@ -245,13 +245,30 @@ namespace HenE.VierOPEenRij
 
             // richtboven naar linksonder.
             // kolom naar rij
-            int kolomNummer;
-
+            int aantalTekenOpEenRij = 0;
 
             // Vanaf rij 3 starten.
             for (int kolom = 3; kolom < this.Dimension; kolom++)
             {
-                kolomNummer = kolom;
+                int kolomNummer = kolom;
+                int rijNummer = 0;
+                for (int rij = 0; rij < kolom; rij++)
+                {
+
+                    if (this.veldenInHetSpeelvlak[kolomNummer--, rijNummer++] == teken)
+                    {
+                        aantalTekenOpEenRij++;
+                    }
+                    else
+                    {
+                        aantalTekenOpEenRij = 0;
+                    }
+                }
+            }
+
+            for (int kolom = this.Dimension - 1; kolom > 3; kolom--)
+            {
+                int kolomNummer = kolom;
                 int rijNummer = 0;
                 for (int rij = 0; rij < kolom; rij++)
                 {
@@ -263,19 +280,43 @@ namespace HenE.VierOPEenRij
                 }
             }
 
-            for (int kolom = this.Dimension-1; kolom > this.Dimension - 3; kolom--)
+            for (int kolom = this.Dimension -3; kolom == 0; kolom--)
             {
-                kolomNummer = this.Dimension - 1;
+                int kolomNummer = kolom;
                 int rijNummer = 0;
-                for (int rij = this.Dimension -1; rij > this.Dimension - 3; rij--)
+                for (int rij = 0; rij < this.Dimension-1; rij++)
                 {
-
-                    if (this.veldenInHetSpeelvlak[kolomNummer--, rijNummer++] == teken)
+                    if (kolomNummer == this.Dimension-1)
+                    {
+                        break;
+                    }
+                    if (this.veldenInHetSpeelvlak[kolomNummer++, rijNummer++] == teken)
                     {
 
                     }
                 }
+
             }
+
+            for (int kolom = 0; kolom < this.Dimension - 3; kolom++)
+            {
+                int kolomNummer = 0;
+                int rijNummer = kolom;
+                for (int rij = 0; rij < this.Dimension - 1; rij++)
+                {
+                    if (rijNummer == this.Dimension - 1)
+                    {
+                        break;
+                    }
+                    if (this.veldenInHetSpeelvlak[kolomNummer++, rijNummer++] == teken)
+                    {
+
+                    }
+                }
+
+            }
+
+            // van links boven naar links onder.
 
             int maxDim = this.Dimension;
             maxDim--;
